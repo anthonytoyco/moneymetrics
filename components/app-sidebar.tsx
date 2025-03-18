@@ -27,13 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavAbout } from "./nav-about";
 
-// This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   aboutLinks: [
     {
       name: "About Us",
@@ -169,7 +163,7 @@ export function AppSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <NavHeader name="MoneyMentor" />
+        <NavHeader name="MoneyMentor" favicon="/favicon.ico" />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
