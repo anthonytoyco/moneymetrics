@@ -19,7 +19,7 @@ export function NavHeader({
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton size="lg">
-          <div className="flex justify-center items-center size-8">
+          <div className="flex justify-center items-center size-8 min-w-7 pl-[3px]">
             <img className="flex justify-center items-center" src={favicon} />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
