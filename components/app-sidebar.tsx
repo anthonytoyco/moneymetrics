@@ -10,7 +10,6 @@ import {
   Mail,
   Map,
   PieChart,
-  Settings,
 } from "lucide-react";
 import type * as React from "react";
 
@@ -21,14 +20,14 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { NavAbout } from "./nav-about";
+import { NavInfo } from "./nav-info";
 import { NavHeader } from "./nav-header";
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 
 const data = {
-  aboutLinks: [
+  navInfo: [
     {
       name: "About Us",
       url: "/about",
@@ -53,12 +52,16 @@ const data = {
       isActive: true,
       items: [
         {
+          title: "Overview",
+          url: "/data/overview",
+        },
+        {
           title: "Charts",
-          url: "/dashboard/data/charts",
+          url: "/data/charts",
         },
         {
           title: "Trends",
-          url: "/dashboard/data/trends",
+          url: "/data/trends",
         },
       ],
     },
@@ -69,60 +72,40 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Overview",
-          url: "/dashboard/financials/overview",
+          title: "Logging",
+          url: "/financials/logging",
         },
         {
-          title: "Manual Upload",
-          url: "/dashboard/financials/manual",
+          title: "Import",
+          url: "/financials/import",
         },
         {
-          title: "Automatic Upload",
-          url: "/dashboard/financials/automatic",
+          title: "Export",
+          url: "/financials/export",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-      isActive: true,
-      items: [
-        {
-          title: "General",
-          url: "/dashboard/settings/general",
-        },
-        {
-          title: "Profile",
-          url: "/dashboard/settings/profile",
-        },
-        {
-          title: "App",
-          url: "/dashboard/settings/app",
-        },
-      ],
-    },
-    {
-      title: "MoneyMentor AI",
+      title: "MMAI",
       url: "#",
       icon: Bot,
       isActive: false,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "1",
+          url: "/ai/1",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "2",
+          url: "/ai/2",
         },
         {
-          title: "Tutorials",
-          url: "#",
+          title: "3",
+          url: "/ai/3",
         },
         {
-          title: "Changelog",
-          url: "#",
+          title: "4",
+          url: "/ai/4",
         },
       ],
     },
@@ -160,7 +143,7 @@ export function AppSidebar({
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.navProjects} />
-        <NavAbout links={data.aboutLinks} />
+        <NavInfo links={data.navInfo} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

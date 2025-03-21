@@ -1,6 +1,12 @@
 "use client";
 
-import { Folder, Forward, Trash2, type LucideIcon } from "lucide-react";
+import {
+  Folder,
+  Forward,
+  Trash2,
+  MoreHorizontal,
+  type LucideIcon,
+} from "lucide-react";
 
 import {
   DropdownMenu,
@@ -13,12 +19,13 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 
-export function NavAbout({
+export function NavInfo({
   links,
 }: {
   links: {
@@ -42,7 +49,12 @@ export function NavAbout({
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild></DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuAction showOnHover>
+                  <MoreHorizontal />
+                  <span className="sr-only">More</span>
+                </SidebarMenuAction>
+              </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48 rounded-lg"
                 side={isMobile ? "bottom" : "right"}

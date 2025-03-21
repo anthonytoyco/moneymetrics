@@ -1,6 +1,7 @@
 "use client";
 
 import type * as React from "react";
+import { useRouter } from "next/navigation";
 
 import {
   SidebarMenu,
@@ -15,10 +16,16 @@ export function NavHeader({
   name?: string;
   favicon?: string;
 }) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/");
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton size="lg">
+        <SidebarMenuButton size="lg" onClick={handleClick}>
           <div className="flex justify-center items-center size-8 min-w-7 pl-[3px]">
             <img className="flex justify-center items-center" src={favicon} />
           </div>
