@@ -1,23 +1,19 @@
 "use client";
 
-import type * as React from "react";
 import {
-  BookOpen,
   Bot,
+  ChartArea,
+  CircleDollarSign,
   Frame,
   HelpCircle,
   Info,
   Mail,
   Map,
   PieChart,
-  Settings2,
-  SquareTerminal,
+  Settings,
 } from "lucide-react";
+import type * as React from "react";
 
-import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
-import { NavUser } from "./nav-user";
-import { NavHeader } from "./nav-header";
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +22,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavAbout } from "./nav-about";
+import { NavHeader } from "./nav-header";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
 
 const data = {
   aboutLinks: [
@@ -47,50 +47,66 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Data",
       url: "#",
-      icon: SquareTerminal,
+      icon: ChartArea,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Charts",
+          url: "/dashboard/data/charts",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Trends",
+          url: "/dashboard/data/trends",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Financials",
+      url: "#",
+      icon: CircleDollarSign,
+      isActive: true,
+      items: [
+        {
+          title: "Overview",
+          url: "/dashboard/financials/overview",
+        },
+        {
+          title: "Manual Upload",
+          url: "/dashboard/financials/manual",
+        },
+        {
+          title: "Automatic Upload",
+          url: "/dashboard/financials/automatic",
+        },
+      ],
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings,
+      isActive: true,
+      items: [
+        {
+          title: "General",
+          url: "/dashboard/settings/general",
+        },
+        {
+          title: "Profile",
+          url: "/dashboard/settings/profile",
+        },
+        {
+          title: "App",
+          url: "/dashboard/settings/app",
+        },
+      ],
+    },
+    {
+      title: "MoneyMentor AI",
       url: "#",
       icon: Bot,
-      isActive: true,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Introduction",
@@ -110,32 +126,8 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      isActive: true,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
   ],
-  projects: [
+  navProjects: [
     {
       name: "Design Engineering",
       url: "#",
@@ -167,7 +159,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.navProjects} />
         <NavAbout links={data.aboutLinks} />
       </SidebarContent>
       <SidebarFooter>

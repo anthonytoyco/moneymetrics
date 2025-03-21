@@ -31,7 +31,7 @@ export function NavAbout({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Learn Mentor</SidebarGroupLabel>
+      <SidebarGroupLabel>MoneyMentor</SidebarGroupLabel>
       <SidebarMenu>
         {links.map((item) => (
           <SidebarMenuItem key={item.name}>
