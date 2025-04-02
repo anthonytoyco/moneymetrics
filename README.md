@@ -2,13 +2,13 @@
 
 ## Overview
 
-MoneyMentor is an AI-powered budgeting assistant that helps users track expenses, analyze spending patterns, and receive personalized financial insights. Built with Next.js, FastAPI*, and Supabase, the application integrates OCR and AI-based categorization to automate transaction processing and provide dynamic budgeting recommendations.
+MoneyMentor is an AI-powered budgeting assistant that helps users track expenses, analyze spending patterns, and receive personalized financial insights. Built with Next.js and Supabase, the application integrates OCR and AI-based categorization to automate transaction processing and provide dynamic budgeting recommendations.
 
 ## Planned Features
 
 ### Core Features
 
-- [ ] **Secure User Accounts**: Users will have secure accounts to store and manage financial data.
+- [x] **Secure User Accounts**: Users will have secure accounts to store and manage financial data.
 
 - [ ] **Transaction Upload from Screenshots/PDFs**: Allows users to upload images of their transactions or bank statements for processing.
 
@@ -34,15 +34,11 @@ MoneyMentor is an AI-powered budgeting assistant that helps users track expenses
 
 ## Technology Stack
 
-<!-- - **Frontend**: [NiceGUI](https://nicegui.io/), hosted on [Render](https://render.com) at [moneymentorapp.tech](https://moneymentorapp.tech) -->
-
-<!-- - **Backend**: [FastAPI](https://fastapi.tiangolo.com/), hosted on [Render](https://render.com) at [api.moneymentorapp.tech](https://api.moneymentorapp.tech) -->
-
 - **Database**: [Supabase](https://supabase.com/)
 
-- **OCR Processing**: Tesseract OCR\*
+- **OCR Processing**: [Tesseract OCR](https://github.com/naptha/tesseract.js)
 
-- **AI & APIs**:
+- **AI & APIs**: [Google Gemini](https://ai.google.dev/)
 
 - **Visualization**: Matplotlib\*
 

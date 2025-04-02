@@ -39,19 +39,32 @@ export const updateSession = async (request: NextRequest) => {
     // https://supabase.com/docs/guides/auth/server-side/nextjs
     const user = await supabase.auth.getUser();
 
-    // protected routes
+    // Redirect to welcome page if user is authed and no full_name, unless they are already on the welcome page
+    const hasFullName = user.data?.user?.user_metadata?.full_name;
     if (
-      (request.nextUrl.pathname.startsWith("/protected") ||
-        request.nextUrl.pathname.startsWith("/dashboard")) &&
-      user.error
+      user.data.user &&
+      !hasFullName &&
+      request.nextUrl.pathname !== "/welcome"
+    ) {
+      return NextResponse.redirect(new URL("/welcome", request.url));
+    }
+    // Redirect to dashboard if user is authed and has a full_name
+    if (
+      user.data.user &&
+      hasFullName &&
+      request.nextUrl.pathname === "/welcome"
+    ) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
+    // Prevent unauthed users from accessing protected pages
+    if (
+      (!user.data.user && request.nextUrl.pathname === "/welcome") ||
+      (!user.data.user && request.nextUrl.pathname === "/dashboard") ||
+      (!user.data.user && request.nextUrl.pathname === "/protected")
     ) {
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
-
-    // TODO Change how authed users are handled
-    // if (request.nextUrl.pathname === "/" && !user.error) {
-    //   return NextResponse.redirect(new URL("/protected", request.url));
-    // }
 
     return response;
   } catch (e) {

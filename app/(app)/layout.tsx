@@ -25,20 +25,14 @@ export default async function DashboardLayout({
     return redirect("/sign-in");
   }
 
-  const mappedUser = user
-    ? {
-        name: user.user?.user_metadata?.sub || user.user?.user_metadata?.sub,
-        email: user.user?.user_metadata?.email,
-        avatar:
-          user.user?.user_metadata?.avatar_url ||
-          "https://api.dicebear.com/9.x/initials/svg?backgroundColor=90a484&seed=" +
-            user.user?.email,
-      }
-    : {
-        name: "Guest",
-        email: "guest@example.com",
-        avatar: "/avatars/default.jpg",
-      };
+  const mappedUser = {
+    name: user.user?.user_metadata?.full_name,
+    email: user.user?.user_metadata?.email,
+    avatar:
+      user.user?.user_metadata?.avatar_url ||
+      "https://api.dicebear.com/9.x/initials/svg?backgroundColor=90a484&seed=" +
+        user.user?.email,
+  };
 
   return (
     <SidebarProvider>
