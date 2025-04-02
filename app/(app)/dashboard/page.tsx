@@ -7,8 +7,23 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function Page() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // const { data, error } = await supabase.auth.updateUser({
+  //   data: { full_name: "Anthony Toyco" },
+  // });
+
+  // const { data, error } = await supabase.auth.updateUser({
+  //   data: { hello: null },
+  // });
+
   return (
     <>
       <header className="flex h-16 min-h-16 justify-between shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
