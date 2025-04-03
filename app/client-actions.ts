@@ -1,8 +1,8 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { type WelcomeFormValues } from "@/components/form-welcome";
-import { type TransactionFormValues } from "@/components/form-transaction";
+import { type WelcomeFormValues } from "@/components/forms/form-welcome";
+import { type TransactionFormValues } from "@/components/forms/form-transaction";
 
 export async function initProfile(values: WelcomeFormValues) {
   try {

@@ -27,7 +27,7 @@ import {
 import {
   FormMessage as MessageComponent,
   type Message,
-} from "@/components/form-message";
+} from "@/components/forms/form-message";
 
 const formSchema = z.object({
   title: z.string().min(2, {

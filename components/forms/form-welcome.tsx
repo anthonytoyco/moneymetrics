@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import {
   FormMessage as MessageComponent,
   type Message,
-} from "@/components/form-message";
+} from "@/components/forms/form-message";
 
 const formSchema = z.object({
   username: z.string().min(2, {

@@ -1,7 +1,7 @@
 import { createTransaction } from "@/app/client-actions";
 import { BreadcrumbHeader } from "@/components/breadcrumb-header";
-import { DataTable } from "@/components/data-table";
-import { TransactionForm } from "@/components/form-transaction";
+import { DataTable } from "@/components/tables/data-table";
+import { TransactionForm } from "@/components/forms/form-transaction";
 import { createClient } from "@/utils/supabase/server";
 import { Transaction, columns } from "./columns";
 
@@ -36,7 +36,7 @@ export default async function Page() {
       <BreadcrumbHeader currentPage="Transactions" parentPage="Financials" />
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="mx-auto max-w-2xl w-full">
-          <h2 className="text-2xl font-bold mb-4">Add New Transaction</h2>
+          <h2 className="text-2xl font-bold mb-4">Add a New Transaction</h2>
           <TransactionForm onSubmit={createTransaction} />
         </div>
         <div className="mx-auto max-w-2xl w-full">

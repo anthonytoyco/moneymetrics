@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
 import { deleteTransaction } from "@/app/client-actions";
-import { DataTableColumnHeader } from "@/components/table-header";
+import { DataTableColumnHeader } from "@/components/tables/table-header";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

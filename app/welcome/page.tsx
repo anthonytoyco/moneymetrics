@@ -1,4 +1,4 @@
-import { WelcomeForm } from "@/components/form-welcome";
+import { WelcomeForm } from "@/components/forms/form-welcome";
 import { initProfile } from "@/app/client-actions";
 
 export default async function WelcomePage() {

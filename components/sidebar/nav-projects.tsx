@@ -3,8 +3,8 @@
 import {
   Folder,
   Forward,
-  Trash2,
   MoreHorizontal,
+  Trash2,
   type LucideIcon,
 } from "lucide-react";
 
@@ -25,10 +25,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-export function NavInfo({
-  links,
+export function NavProjects({
+  projects,
 }: {
-  links: {
+  projects: {
     name: string;
     url: string;
     icon: LucideIcon;
@@ -38,9 +38,9 @@ export function NavInfo({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>MoneyMentor</SidebarGroupLabel>
+      <SidebarGroupLabel>Projects</SidebarGroupLabel>
       <SidebarMenu>
-        {links.map((item) => (
+        {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
               <a href={item.url}>

@@ -20,11 +20,11 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { NavInfo } from "./nav-info";
-import { NavHeader } from "./nav-header";
-import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
-import { NavUser } from "./nav-user";
+import { NavInfo } from "@/components/sidebar/nav-info";
+import { NavHeader } from "@/components/sidebar/nav-header";
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavProjects } from "@/components/sidebar/nav-projects";
+import { NavUser } from "@/components/sidebar/nav-user";
 
 const data = {
   navInfo: [

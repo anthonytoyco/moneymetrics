@@ -22,8 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DataTablePagination } from "@/components/table-pagination";
-import { DataTableViewOptions } from "./table-toggle";
+import { DataTablePagination } from "@/components/tables/table-pagination";
+import { DataTableViewOptions } from "@/components/tables/table-toggle";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
