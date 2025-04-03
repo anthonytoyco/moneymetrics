@@ -59,10 +59,6 @@ const data = {
           title: "Charts",
           url: "/data/charts",
         },
-        {
-          title: "Trends",
-          url: "/data/trends",
-        },
       ],
     },
     {
@@ -86,26 +82,14 @@ const data = {
       ],
     },
     {
-      title: "MMAI",
+      title: "MoneyMentor AI",
       url: "#",
       icon: Bot,
-      isActive: false,
+      isActive: true,
       items: [
         {
-          title: "1",
-          url: "/ai/1",
-        },
-        {
-          title: "2",
-          url: "/ai/2",
-        },
-        {
-          title: "3",
-          url: "/ai/3",
-        },
-        {
-          title: "4",
-          url: "/ai/4",
+          title: "Chat",
+          url: "/ai/chat",
         },
       ],
     },
