@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  FormMessage as MessageComponent,
+  type Message,
+} from "@/components/form-message";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -26,14 +31,15 @@ const formSchema = z.object({
   avatar: z.any().optional(),
 });
 
-export type FormValues = z.infer<typeof formSchema>;
+export type WelcomeFormValues = z.infer<typeof formSchema>;
 
 interface WelcomeFormProps {
-  onSubmit: (values: FormValues) => Promise<void>;
+  onSubmit: (values: WelcomeFormValues) => Promise<Message>;
 }
 
 export function WelcomeForm({ onSubmit }: WelcomeFormProps) {
-  const form = useForm<FormValues>({
+  const [message, setMessage] = React.useState<Message | null>(null);
+  const form = useForm<WelcomeFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
@@ -42,9 +48,22 @@ export function WelcomeForm({ onSubmit }: WelcomeFormProps) {
     },
   });
 
+  const handleSubmit = async (values: WelcomeFormValues) => {
+    try {
+      const result = await onSubmit(values);
+      setMessage(result);
+      if ("success" in result) {
+        form.reset();
+      }
+    } catch (error) {
+      setMessage({ error: "An unexpected error occurred" });
+    }
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        {message && <MessageComponent message={message} />}
         <FormField
           control={form.control}
           name="username"

@@ -1,4 +1,3 @@
-import HeaderAuth from "@/components/header-auth";
 import {
   Breadcrumb,
   BreadcrumbItem,

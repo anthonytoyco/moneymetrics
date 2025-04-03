@@ -1,4 +1,3 @@
-import HeaderAuth from "@/components/header-auth";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,6 +8,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { TransactionForm } from "@/components/form-transaction";
+import { createTransaction } from "@/app/client-actions";
 
 export default async function Page() {
   return (
@@ -36,7 +37,10 @@ export default async function Page() {
         <div className="flex align-top px-4"></div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <p>Financials Logging</p>
+        <div className="mx-auto max-w-2xl w-full">
+          <h2 className="text-2xl font-bold mb-4">Add New Transaction</h2>
+          <TransactionForm onSubmit={createTransaction} />
+        </div>
       </div>
     </>
   );

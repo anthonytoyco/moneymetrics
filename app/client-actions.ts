@@ -1,9 +1,10 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { type FormValues } from "@/components/welcome-form";
+import { type WelcomeFormValues } from "@/components/form-welcome";
+import { type TransactionFormValues } from "@/components/form-transaction";
 
-export async function initProfile(values: FormValues) {
+export async function initProfile(values: WelcomeFormValues) {
   try {
     const supabase = await createClient();
     const {
@@ -13,11 +14,11 @@ export async function initProfile(values: FormValues) {
 
     if (userError) {
       console.error("Error getting user:", userError);
-      throw new Error("Failed to get user information");
+      return { error: "Failed to get user information" };
     }
 
     if (!user) {
-      throw new Error("No user found");
+      return { error: "No user found" };
     }
 
     const { username, name, avatar } = values;
@@ -33,7 +34,7 @@ export async function initProfile(values: FormValues) {
 
       if (uploadError) {
         console.error("Error uploading avatar:", uploadError);
-        throw new Error("Failed to upload avatar");
+        return { error: "Failed to upload avatar" };
       }
 
       const {
@@ -52,7 +53,7 @@ export async function initProfile(values: FormValues) {
 
     if (authError) {
       console.error("Error updating auth user:", authError);
-      throw new Error("Failed to update user profile");
+      return { error: "Failed to update user profile" };
     }
 
     const { error: profileError } = await supabase.from("profiles").upsert({
@@ -65,12 +66,54 @@ export async function initProfile(values: FormValues) {
 
     if (profileError) {
       console.error("Error updating profile:", profileError);
-      throw new Error("Failed to update profile in database");
+      return { error: "Failed to update profile in database" };
     }
 
-    window.location.href = "/dashboard";
+    return { success: "Profile updated successfully!" };
   } catch (error) {
     console.error("Profile update error:", error);
-    throw error;
+    return { error: "An unexpected error occurred" };
+  }
+}
+
+export async function createTransaction(values: TransactionFormValues) {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.error("Error getting user:", userError);
+      return { error: "Failed to get user information" };
+    }
+
+    if (!user) {
+      return { error: "No user found" };
+    }
+
+    const { title, description, amount, category, date } = values;
+
+    const { error: transactionError } = await supabase
+      .from("transactions")
+      .insert({
+        user_id: user.id,
+        title,
+        description,
+        amount: Number(amount),
+        category,
+        date: new Date(date).toISOString(),
+      });
+
+    if (transactionError) {
+      console.error("Error creating transaction:", transactionError);
+      return { error: "Failed to create transaction" };
+    }
+
+    return { success: "Transaction created successfully!" };
+  } catch (error) {
+    console.error("Transaction creation error:", error);
+    return { error: "An unexpected error occurred" };
   }
 }
