@@ -72,8 +72,8 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Logging",
-          url: "/financials/logging",
+          title: "Transactions",
+          url: "/financials/transactions",
         },
         {
           title: "Import",

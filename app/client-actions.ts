@@ -69,6 +69,7 @@ export async function initProfile(values: WelcomeFormValues) {
       return { error: "Failed to update profile in database" };
     }
 
+    window.location.reload();
     return { success: "Profile updated successfully!" };
   } catch (error) {
     console.error("Profile update error:", error);
@@ -111,9 +112,24 @@ export async function createTransaction(values: TransactionFormValues) {
       return { error: "Failed to create transaction" };
     }
 
+    window.location.reload();
     return { success: "Transaction created successfully!" };
   } catch (error) {
     console.error("Transaction creation error:", error);
     return { error: "An unexpected error occurred" };
   }
+}
+
+export async function deleteTransaction(id: string) {
+  const supabase = await createClient();
+  const { error: deleteError } = await supabase
+    .from("transactions")
+    .delete()
+    .eq("id", id);
+  if (deleteError) {
+    console.error("Error deleting transaction:", deleteError);
+    return { error: "Failed to delete transaction" };
+  }
+  window.location.reload();
+  return { success: "Transaction deleted successfully!" };
 }
