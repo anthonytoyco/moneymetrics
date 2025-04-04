@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   flexRender,
@@ -24,27 +23,31 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/tables/table-pagination";
 import { DataTableViewOptions } from "@/components/tables/table-toggle";
+import {
+  ImportTransaction,
+  columns,
+} from "@/app/(app)/financials/import/columns";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  filterPlaceholder?: string;
-  filterColumn?: string;
+interface ImportTableProps {
+  data: ImportTransaction[];
+  onImport: (id: string) => void;
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  filterPlaceholder = "Filter...",
-  filterColumn = "title",
-}: DataTableProps<TData, TValue>) {
+export function ImportTable({ data, onImport }: ImportTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
 
+  const dataWithCallback = React.useMemo(() => {
+    return data.map((row) => ({
+      ...row,
+      onImport,
+    }));
+  }, [data, onImport]);
+
   const table = useReactTable({
-    data,
+    data: dataWithCallback,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -62,12 +65,10 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 space-x-4 justify-between">
         <Input
-          placeholder={filterPlaceholder}
-          value={
-            (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""
-          }
+          placeholder="Filter by title..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

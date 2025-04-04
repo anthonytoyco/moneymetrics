@@ -4,15 +4,13 @@
 
 MoneyMentor is a financial data visualizer that helps users track expenses and analyze spending patterns. Built with Next.js and Supabase, the application integrates Google Gemini to automate transaction processing.
 
-## Planned Features
-
-### Core Features
+## Core Features
 
 - [x] **Secure User Accounts**: Users will have secure accounts to store and manage financial data.
 
-- [ ] **Transaction Upload from Screenshots/PDFs**: Allows users to upload images of their transactions or bank statements for processing.
+- [x] **Transaction Upload from Screenshots/PDFs**: Allows users to upload images of their transactions or bank statements for processing.
 
-- [ ] **Automated Transaction Categorization**: Uses OCR and AI to extract, categorize, and log transactions automatically.
+- [x] **Automated Transaction Categorization**: Uses OCR and AI to extract, categorize, and log transactions automatically with confirmation from the user.
 
 - [x] **Financial Dashboard**: Displays spending breakdowns and financial trends over time.
 
@@ -22,7 +20,7 @@ MoneyMentor is a financial data visualizer that helps users track expenses and a
 
 - **Database**: [Supabase](https://supabase.com/)
 
-- **AI**: [Google Gemini](https://ai.google.dev/)
+- **AI API**: [Google Gemini](https://ai.google.dev/) (Gemini 2.0 Flash-Lite)
 
 ## PDFs
 

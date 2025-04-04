@@ -77,7 +77,10 @@ export async function initProfile(values: WelcomeFormValues) {
   }
 }
 
-export async function createTransaction(values: TransactionFormValues) {
+export async function createTransaction(
+  values: TransactionFormValues,
+  shouldRefresh: boolean = true
+) {
   try {
     const supabase = await createClient();
     const {
@@ -112,7 +115,10 @@ export async function createTransaction(values: TransactionFormValues) {
       return { error: "Failed to create transaction" };
     }
 
-    window.location.reload();
+    if (shouldRefresh) {
+      window.location.reload();
+    }
+
     return { success: "Transaction created successfully!" };
   } catch (error) {
     console.error("Transaction creation error:", error);

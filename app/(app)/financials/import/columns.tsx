@@ -1,20 +1,13 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Plus } from "lucide-react";
 
-import { deleteTransaction } from "@/app/client-actions";
+import { createTransaction } from "@/app/client-actions";
 import { DataTableColumnHeader } from "@/components/tables/table-header";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-export type Transaction = {
+export type ImportTransaction = {
   id: string;
   title: string;
   description: string;
@@ -23,7 +16,7 @@ export type Transaction = {
   date: string;
 };
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<ImportTransaction>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -75,33 +68,39 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Date" />
     ),
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("date"));
-      const formatted = date.toISOString().split("T")[0];
-
-      return <div className="font-medium">{formatted}</div>;
-    },
   },
   {
     id: "actions",
     cell: ({ row }) => {
       const transaction = row.original;
-
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Delete Transaction?</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => deleteTransaction(transaction.id)}>
-              Confirm
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={async () => {
+            try {
+              await createTransaction(
+                {
+                  title: transaction.title,
+                  amount: transaction.amount.toString(),
+                  category: transaction.category,
+                  date: transaction.date,
+                  description: transaction.description || "",
+                },
+                false
+              );
+              // Call onImport to remove the row from the table
+              const onImport = (row.original as any).onImport;
+              if (onImport) {
+                onImport(transaction.id);
+              }
+            } catch (error) {
+              console.error("Error importing transaction:", error);
+            }
+          }}
+        >
+          <Plus className="h-4 w-4" />
+        </Button>
       );
     },
   },
