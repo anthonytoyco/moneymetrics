@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function AuthButton() {
+export default async function MainAuth() {
   const supabase = await createClient();
 
   const {
@@ -11,20 +11,25 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-col items-center gap-4">
       Hey, {user.email}!
-      <form action={signOutAction}>
-        <Button type="submit" variant={"outline"}>
-          Sign out
+      <div className="flex flex-col items-center gap-4">
+        <Button asChild variant={"outline"}>
+          <Link href="/data/charts">Go to App</Link>
         </Button>
-      </form>
+        <form action={signOutAction}>
+          <Button type="submit" variant={"outline"}>
+            Sign out
+          </Button>
+        </form>
+      </div>
     </div>
   ) : (
     <div className="flex gap-2">
-      <Button asChild size="sm" variant={"outline"}>
+      <Button asChild variant={"outline"}>
         <Link href="/sign-in">Sign in</Link>
       </Button>
-      <Button asChild size="sm" variant={"default"}>
+      <Button asChild variant={"default"}>
         <Link href="/sign-up">Sign up</Link>
       </Button>
     </div>
