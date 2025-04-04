@@ -33,10 +33,10 @@ type CategoryData = {
 
 // ===== Constants =====
 const TIME_PERIODS = [
-  { value: "7d", label: "Last 7d" },
-  { value: "30d", label: "Last 30d" },
-  { value: "90d", label: "Last 90d" },
-  { value: "1y", label: "Last 1y" },
+  { value: "7d", label: "7d" },
+  { value: "30d", label: "30d" },
+  { value: "90d", label: "90d" },
+  { value: "1y", label: "1y" },
 ] as const;
 
 const CATEGORIES = [
@@ -88,7 +88,6 @@ export function RadarExpenses() {
   const getStartDate = React.useCallback(() => {
     const referenceDate = new Date();
     const currentYear = referenceDate.getFullYear();
-    const currentMonth = referenceDate.getMonth();
     
     if (timePeriod === "1y") {
       // For yearly view, show all months up to current month
@@ -207,7 +206,7 @@ export function RadarExpenses() {
           </div>
           <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
             <Select value={timePeriod} onValueChange={setTimePeriod}>
-              <SelectTrigger className="w-[120px] rounded-lg sm:ml-auto">
+              <SelectTrigger className="w-[60px] rounded-lg sm:ml-auto">
                 <SelectValue placeholder="Last 90d" />
               </SelectTrigger>
               <SelectContent>
