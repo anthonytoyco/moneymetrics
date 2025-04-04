@@ -222,11 +222,16 @@ export function PieTransactions() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error("User not found");
 
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth();
+      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
       const { data, error } = await supabase
         .from("transactions")
         .select("*")
         .eq("user_id", user.id)
-        .eq("category", activeCategory);
+        .gte("date", `${currentYear}-01-01`)
+        .lte("date", `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(lastDayOfMonth).padStart(2, '0')}`);
 
       if (error) throw error;
 
@@ -253,7 +258,7 @@ export function PieTransactions() {
     } finally {
       setIsLoading(false);
     }
-  }, [activeCategory]);
+  }, []);
 
   // ===== Effects =====
   React.useEffect(() => {

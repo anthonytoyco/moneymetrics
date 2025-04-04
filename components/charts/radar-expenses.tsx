@@ -87,19 +87,24 @@ export function RadarExpenses() {
   // ===== Helper Functions =====
   const getStartDate = React.useCallback(() => {
     const referenceDate = new Date();
-    let daysToSubtract = 90;
-
+    const currentYear = referenceDate.getFullYear();
+    const currentMonth = referenceDate.getMonth();
+    
     if (timePeriod === "1y") {
-      daysToSubtract = 365;
-    } else if (timePeriod === "30d") {
-      daysToSubtract = 30;
-    } else if (timePeriod === "7d") {
-      daysToSubtract = 7;
+      // For yearly view, show all months up to current month
+      return new Date(currentYear, 0, 1); // Start of current year
+    } else {
+      // For other periods, calculate days to subtract
+      let daysToSubtract = 90;
+      if (timePeriod === "30d") {
+        daysToSubtract = 30;
+      } else if (timePeriod === "7d") {
+        daysToSubtract = 7;
+      }
+      const startDate = new Date(referenceDate);
+      startDate.setDate(startDate.getDate() - daysToSubtract);
+      return startDate;
     }
-
-    const startDate = new Date(referenceDate);
-    startDate.setDate(startDate.getDate() - daysToSubtract);
-    return startDate;
   }, [timePeriod]);
 
   // ===== Data Fetching =====
