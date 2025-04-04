@@ -26,14 +26,6 @@ export function BreadcrumbHeader({
         <Separator orientation="vertical" className="mr-2 h-4" />
         <Breadcrumb>
           <BreadcrumbList>
-            {currentPage === "Dashboard" ? null : (
-              <>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="" />
-              </>
-            )}
             {parentPage && (
               <>
                 <BreadcrumbItem>

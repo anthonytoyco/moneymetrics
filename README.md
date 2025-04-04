@@ -2,7 +2,7 @@
 
 ## Overview
 
-MoneyMentor is an AI-powered budgeting assistant that helps users track expenses, analyze spending patterns, and receive personalized financial insights. Built with Next.js and Supabase, the application integrates OCR and AI-based categorization to automate transaction processing and provide dynamic budgeting recommendations.
+MoneyMentor is a financial data visualizer that helps users track expenses and analyze spending patterns. Built with Next.js and Supabase, the application integrates Google Gemini to automate transaction processing.
 
 ## Planned Features
 
@@ -14,33 +14,15 @@ MoneyMentor is an AI-powered budgeting assistant that helps users track expenses
 
 - [ ] **Automated Transaction Categorization**: Uses OCR and AI to extract, categorize, and log transactions automatically.
 
-- [ ] **Financial Dashboard**: Displays spending breakdowns, progress on savings, and financial trends over time.
+- [x] **Financial Dashboard**: Displays spending breakdowns and financial trends over time.
 
-- [ ] **Data Visualization**: Provides graphs and charts to help users understand their financial habits.
-
-- [ ] **Dynamic Budgeting System**: Enables users to set budgets that adjust dynamically based on their spending trends.
-
-- [ ] **Social Groups**: Users can form groups within the app to complete group challenges and compete with other groups.
-
-### Advanced Features
-
-- [ ] **Personalized AI Feedback**: Offers real-time AI-driven financial insights and recommendations.
-
-- [ ] **Spending Pattern Analysis**: Uses AI to track and analyze spending behavior for better financial awareness.
-
-- [ ] **Predictive Budgeting**: Uses historical transaction data to forecast future expenses and recommend budget adjustments.
-
-- [ ] **AI Chatbot for Financial Guidance**: Answers user financial questions using AI-driven insights from their spending data.
+- [x] **Data Visualization**: Provides graphs and charts to help users understand their financial habits.
 
 ## Technology Stack
 
 - **Database**: [Supabase](https://supabase.com/)
 
-- **OCR Processing**: [Tesseract OCR](https://github.com/naptha/tesseract.js)
-
-- **AI & APIs**: [Google Gemini](https://ai.google.dev/)
-
-- **Visualization**: Matplotlib\*
+- **AI**: [Google Gemini](https://ai.google.dev/)
 
 ## PDFs
 

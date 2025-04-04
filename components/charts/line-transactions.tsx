@@ -1,8 +1,8 @@
 "use client";
 
+import { createClient } from "@/utils/supabase/client";
 import * as React from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { createClient } from "@/utils/supabase/client";
 
 import {
   Card,
@@ -17,15 +17,29 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-// Types
+// ===== Types =====
 type TransactionData = {
   date: string;
   amount: number;
   count: number;
 };
 
-// Constants
+type CategoryButtonProps = {
+  category: keyof typeof chartConfig;
+  isActive: boolean;
+  totals: { amount: number; count: number };
+  onClick: () => void;
+};
+
+// ===== Constants =====
 const CATEGORIES = [
   "food",
   "transport",
@@ -67,14 +81,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-// Helper Components
-type CategoryButtonProps = {
-  category: keyof typeof chartConfig;
-  isActive: boolean;
-  totals: { amount: number; count: number };
-  onClick: () => void;
-};
-
+// ===== Helper Components =====
 const CategoryButton = ({
   category,
   isActive,
@@ -99,8 +106,10 @@ const CategoryButton = ({
   </button>
 );
 
-// Main Component
-export function ChartTransactions() {
+// ===== Main Component =====
+export function LineTransactions() {
+  // ===== State Management =====
+  const id = "line-transactions";
   const [activeCategory, setActiveCategory] =
     React.useState<keyof typeof chartConfig>("food");
   const [chartData, setChartData] = React.useState<TransactionData[]>([]);
@@ -108,7 +117,80 @@ export function ChartTransactions() {
     [key: string]: { amount: number; count: number };
   }>({});
   const [isLoading, setIsLoading] = React.useState(true);
+  const [timeRange, setTimeRange] = React.useState("90d");
+  const [oldestTransactionDate, setOldestTransactionDate] =
+    React.useState<Date | null>(null);
+  const [newestTransactionDate, setNewestTransactionDate] =
+    React.useState<Date | null>(null);
 
+  // ===== Helper Functions =====
+  const fetchTransactionDateRange = React.useCallback(async () => {
+    try {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error("User not found");
+
+      // Fetch oldest transaction
+      const { data: oldestData, error: oldestError } = await supabase
+        .from("transactions")
+        .select("date")
+        .eq("user_id", user.id)
+        .order("date", { ascending: true })
+        .limit(1);
+
+      if (oldestError) throw oldestError;
+      if (oldestData && oldestData.length > 0) {
+        setOldestTransactionDate(new Date(oldestData[0].date));
+      }
+
+      // Fetch newest transaction
+      const { data: newestData, error: newestError } = await supabase
+        .from("transactions")
+        .select("date")
+        .eq("user_id", user.id)
+        .order("date", { ascending: false })
+        .limit(1);
+
+      if (newestError) throw newestError;
+      if (newestData && newestData.length > 0) {
+        setNewestTransactionDate(new Date(newestData[0].date));
+      }
+    } catch (error) {
+      console.error("Error fetching transaction date range:", error);
+    }
+  }, []);
+
+  const getStartDate = () => {
+    if (timeRange === "lifetime") {
+      return oldestTransactionDate || new Date(0);
+    }
+
+    const referenceDate = new Date();
+    let daysToSubtract = 90;
+    if (timeRange === "1y") {
+      daysToSubtract = 365;
+    } else if (timeRange === "30d") {
+      daysToSubtract = 30;
+    } else if (timeRange === "7d") {
+      daysToSubtract = 7;
+    }
+    const startDate = new Date(referenceDate);
+    startDate.setDate(startDate.getDate() - daysToSubtract);
+    return startDate;
+  };
+
+  const getEndDate = () => {
+    if (timeRange === "lifetime") {
+      return newestTransactionDate || new Date();
+    }
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999);
+    return endDate;
+  };
+
+  // ===== Data Fetching =====
   const fetchAllCategoryTotals = React.useCallback(async () => {
     try {
       const supabase = createClient();
@@ -117,10 +199,20 @@ export function ChartTransactions() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error("User not found");
 
-      const { data, error } = await supabase
+      const startDate = getStartDate();
+      const endDate = getEndDate();
+
+      const query = supabase
         .from("transactions")
         .select("*")
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .lte("date", endDate.toISOString());
+
+      if (timeRange !== "lifetime") {
+        query.gte("date", startDate.toISOString());
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
 
@@ -142,7 +234,7 @@ export function ChartTransactions() {
     } catch (error) {
       console.error("Error fetching category totals:", error);
     }
-  }, []);
+  }, [timeRange, oldestTransactionDate]);
 
   const fetchTransactionData = React.useCallback(async () => {
     try {
@@ -152,37 +244,31 @@ export function ChartTransactions() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error("User not found");
 
-      const { data, error } = await supabase
+      const startDate = getStartDate();
+      const endDate = getEndDate();
+
+      const query = supabase
         .from("transactions")
         .select("*")
         .eq("user_id", user.id)
         .eq("category", activeCategory)
+        .lte("date", endDate.toISOString())
         .order("date", { ascending: true });
 
-      if (error) throw error;
-
-      // Find the date range
-      let startDate = new Date();
-      let endDate = new Date();
-
-      if (data.length > 0) {
-        startDate = new Date(
-          Math.min(...data.map((t) => new Date(t.date).getTime()))
-        );
-        endDate = new Date(
-          Math.max(...data.map((t) => new Date(t.date).getTime()))
-        );
-      } else {
-        endDate = new Date();
-        startDate = new Date();
-        startDate.setDate(startDate.getDate() - 30);
+      if (timeRange !== "lifetime") {
+        query.gte("date", startDate.toISOString());
       }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
 
       // Create array of all dates in range
       const allDates: TransactionData[] = [];
       const currentDate = new Date(startDate);
+      const finalEndDate = getEndDate();
 
-      while (currentDate <= endDate) {
+      while (currentDate <= finalEndDate) {
         allDates.push({
           date: currentDate.toISOString().split("T")[0],
           amount: 0,
@@ -210,7 +296,23 @@ export function ChartTransactions() {
     } finally {
       setIsLoading(false);
     }
-  }, [activeCategory]);
+  }, [activeCategory, timeRange, oldestTransactionDate]);
+
+  // ===== Data Filtering =====
+  const filteredData = chartData.filter((item) => {
+    const date = new Date(item.date);
+    const endDate = getEndDate();
+    if (timeRange === "lifetime") {
+      return date <= endDate;
+    }
+    const startDate = getStartDate();
+    return date >= startDate && date <= endDate;
+  });
+
+  // ===== Effects =====
+  React.useEffect(() => {
+    fetchTransactionDateRange();
+  }, [fetchTransactionDateRange]);
 
   React.useEffect(() => {
     fetchAllCategoryTotals();
@@ -220,18 +322,65 @@ export function ChartTransactions() {
     fetchTransactionData();
   }, [fetchTransactionData]);
 
+  // ===== Loading State =====
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Card data-chart={id}>
+        <CardHeader className="space-y-0 border-b p-0">
+          <div className="flex flex-wrap justify-between">
+            <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+              <CardTitle>Your Transactions</CardTitle>
+              <CardDescription>
+                Your spending trends over time by category
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="flex h-[350px] items-center justify-center">
+          <div className="text-sm text-muted-foreground">Loading data...</div>
+        </CardContent>
+      </Card>
+    );
   }
 
+  // ===== Render =====
   return (
     <Card>
       <CardHeader className="space-y-0 border-b p-0">
-        <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Your Transactions</CardTitle>
-          <CardDescription>
-            Your spending trends over time by category
-          </CardDescription>
+        <div className="flex flex-wrap justify-between">
+          <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+            <CardTitle>Your Transactions</CardTitle>
+            <CardDescription>
+              Your spending trends over time by category
+            </CardDescription>
+          </div>
+          <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+            <Select value={timeRange} onValueChange={setTimeRange}>
+              <SelectTrigger
+                className="w-[120px] rounded-lg sm:ml-auto"
+                aria-label="Select a value"
+              >
+                <SelectValue placeholder="Last 90d" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl">
+                <SelectItem value="7d" className="rounded-lg">
+                  Last 7d
+                </SelectItem>
+                <SelectItem value="30d" className="rounded-lg">
+                  Last 30d
+                </SelectItem>
+                <SelectItem value="90d" className="rounded-lg">
+                  Last 90d
+                </SelectItem>
+                <SelectItem value="1y" className="rounded-lg">
+                  Last 1 year
+                </SelectItem>
+                <SelectItem value="lifetime" className="rounded-lg">
+                  Lifetime
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="flex flex-wrap">
           {CATEGORIES.map((category) => (
@@ -252,7 +401,7 @@ export function ChartTransactions() {
         >
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={filteredData}
             margin={{
               left: 12,
               right: 12,

@@ -42,7 +42,6 @@ export const updateSession = async (request: NextRequest) => {
     // Prevent unauthed users from accessing any pages under (app) folder
     if (
       (!user.data.user && request.nextUrl.pathname.startsWith("/welcome")) ||
-      (!user.data.user && request.nextUrl.pathname.startsWith("/dashboard")) ||
       (!user.data.user && request.nextUrl.pathname.startsWith("/data")) ||
       (!user.data.user && request.nextUrl.pathname.startsWith("/financials")) ||
       (!user.data.user && request.nextUrl.pathname.startsWith("/protected"))
@@ -59,13 +58,13 @@ export const updateSession = async (request: NextRequest) => {
     ) {
       return NextResponse.redirect(new URL("/welcome", request.url));
     }
-    // Redirect to dashboard if user is authed and has a full_name
+    // Redirect to data charts if user is authed and has a full_name
     if (
       user.data.user &&
       hasFullName &&
       request.nextUrl.pathname === "/welcome"
     ) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/data/charts", request.url));
     }
 
     return response;

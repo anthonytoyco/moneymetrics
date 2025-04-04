@@ -19,7 +19,7 @@ export function NavHeader({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/");
+    router.push("/data/charts");
   };
 
   return (
