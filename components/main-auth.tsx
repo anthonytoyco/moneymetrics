@@ -26,7 +26,7 @@ export default async function MainAuth() {
     </div>
   ) : (
     <div className="flex gap-2">
-      <Button asChild variant={"outline"}>
+      <Button asChild variant={"default"}>
         <Link href="/sign-in">Sign in</Link>
       </Button>
       <Button asChild variant={"default"}>
