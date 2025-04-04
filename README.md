@@ -10,7 +10,7 @@ MoneyMetrics is a financial data visualizer that helps users track expenses and 
 
 - [x] **Transaction Upload from Screenshots/PDFs**: Allows users to upload images of their transactions or bank statements for processing.
 
-- [x] **Automated Transaction Categorization**: Uses OCR and AI to extract, categorize, and log transactions automatically with confirmation from the user.
+- [x] **Automated Transaction Categorization**: Uses AI to extract, categorize, and log transactions automatically with confirmation from the user.
 
 - [x] **Financial Dashboard**: Displays spending breakdowns and financial trends over time.
 
