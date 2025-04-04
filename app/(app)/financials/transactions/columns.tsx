@@ -45,7 +45,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const amount = parseFloat(row.getValue("amount"));
       return (
         <div className={amount >= 0 ? "text-green-600" : "text-red-600"}>
-          {amount >= 0 ? "+" : ""}${Math.abs(amount).toFixed(2)}
+          {amount >= 0 ? "+" : "-"}${Math.abs(amount).toFixed(2)}
         </div>
       );
     },
