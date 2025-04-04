@@ -9,7 +9,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "MoneyMentor - Dashboard",
+  title: "MoneyMetrics - Dashboard",
   description: "Your personal AI financial savings assistant",
 };
 
