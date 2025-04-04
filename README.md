@@ -1,8 +1,8 @@
-# MoneyMentor: AI Savings Assistant
+# MoneyMetrics: AI Savings Assistant
 
 ## Overview
 
-MoneyMentor is a financial data visualizer that helps users track expenses and analyze spending patterns. Built with Next.js and Supabase, the application integrates Google Gemini to automate transaction processing.
+MoneyMetrics is a financial data visualizer that helps users track expenses and analyze spending patterns. Built with Next.js and Supabase, the application integrates Google Gemini to automate transaction processing.
 
 ## Core Features
 
@@ -24,6 +24,6 @@ MoneyMentor is a financial data visualizer that helps users track expenses and a
 
 ## PDFs
 
-- **Project Proposal**: [PDF](https://github.com/anthonytoyco/moneymentor/blob/main/misc/project_proposal.pdf)
+- **Project Proposal**: [PDF](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/project_proposal.pdf)
 
-- **Design Proposal**: [PDF](https://github.com/anthonytoyco/moneymentor/blob/main/misc/design_proposal.pdf)
+- **Design Proposal**: [PDF](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/design_proposal.pdf)

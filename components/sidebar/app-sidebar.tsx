@@ -56,7 +56,7 @@ export function AppSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="transition-[padding] group-has-[[data-collapsible=icon]]/sidebar-wrapper:pt-4">
-        <NavHeader name="MoneyMentor" favicon="/favicon.ico" />
+        <NavHeader name="MoneyMetrics" favicon="/favicon.ico" />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
