@@ -1,4 +1,4 @@
-# MoneyMetrics: AI Savings Assistant
+# MoneyMetrics
 
 ## Overview
 
