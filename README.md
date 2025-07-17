@@ -22,8 +22,6 @@ MoneyMetrics is a financial data visualizer that helps users track expenses and 
 
 ![Transactions Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/transactions.png "Transations Page")
 
-![Import Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/import.png "Import Page")
-
 > Link to [sample PDF](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/SAMPLE.pdf)
 
 ## Technology Stack
