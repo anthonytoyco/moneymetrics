@@ -28,6 +28,8 @@ MoneyMetrics is a financial data visualizer that helps users track expenses and 
 
 ## Technology Stack
 
-- **Database**: [Supabase](https://supabase.com/)
-
-- **AI API**: [Google Gemini](https://ai.google.dev/) (Gemini 2.0 Flash-Lite)
+- **Frontend Framework**: [Next.js](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/), [Shadcn UI](https://ui.shadcn.com/)
+- **Database & Auth**: [Supabase](https://supabase.com/)
+- **AI Integration**: [Google Gemini](https://ai.google.dev/) (Gemini 2.0 Flash-Lite)
+- **Deployment**: [Vercel](https://vercel.com/)
