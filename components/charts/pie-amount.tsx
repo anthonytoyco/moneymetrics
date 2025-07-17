@@ -17,7 +17,6 @@ import {
   ChartContainer,
   ChartStyle,
   ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
   Select,
@@ -35,16 +34,6 @@ type MonthlyTransactionData = {
 };
 
 // ===== Constants =====
-const CATEGORIES = [
-  "food",
-  "transport",
-  "utilities",
-  "entertainment",
-  "shopping",
-  "income",
-  "other",
-] as const;
-
 const MONTHS = [
   "january",
   "february",
@@ -61,34 +50,6 @@ const MONTHS = [
 ] as const;
 
 const chartConfig = {
-  food: {
-    label: "Food",
-    color: "hsl(var(--chart-2))",
-  },
-  transport: {
-    label: "Transport",
-    color: "hsl(var(--chart-2))",
-  },
-  utilities: {
-    label: "Utilities",
-    color: "hsl(var(--chart-2))",
-  },
-  entertainment: {
-    label: "Entertainment",
-    color: "hsl(var(--chart-2))",
-  },
-  shopping: {
-    label: "Shopping",
-    color: "hsl(var(--chart-2))",
-  },
-  income: {
-    label: "Income",
-    color: "hsl(var(--chart-2))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-2))",
-  },
   january: {
     label: "January",
     color: "hsl(var(--chart-1))",
@@ -140,35 +101,6 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 // ===== Helper Components =====
-const CategorySelect = ({
-  value,
-  onValueChange,
-}: {
-  value: (typeof CATEGORIES)[number];
-  onValueChange: (value: (typeof CATEGORIES)[number]) => void;
-}) => (
-  <Select value={value} onValueChange={onValueChange}>
-    <SelectTrigger
-      className="h-7 w-[130px] rounded-lg pl-2.5"
-      aria-label="Select a category"
-    >
-      <SelectValue placeholder="Select category" />
-    </SelectTrigger>
-    <SelectContent align="end" className="rounded-xl">
-      {CATEGORIES.map((category) => {
-        const config = chartConfig[category as keyof typeof chartConfig];
-        if (!config) return null;
-
-        return (
-          <SelectItem key={category} value={category} className="rounded-lg">
-            {config.label}
-          </SelectItem>
-        );
-      })}
-    </SelectContent>
-  </Select>
-);
-
 const MonthSelect = ({
   value,
   onValueChange,
@@ -205,9 +137,6 @@ export function PieAmount() {
   const [activeMonth, setActiveMonth] = React.useState<(typeof MONTHS)[number]>(
     MONTHS[0]
   );
-  const [activeCategory, setActiveCategory] = React.useState<
-    (typeof CATEGORIES)[number]
-  >(CATEGORIES[0]);
   const [monthlyData, setMonthlyData] = React.useState<
     MonthlyTransactionData[]
   >([]);
@@ -224,14 +153,21 @@ export function PieAmount() {
 
       const currentYear = new Date().getFullYear();
       const currentMonth = new Date().getMonth();
-      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const lastDayOfMonth = new Date(
+        currentYear,
+        currentMonth + 1,
+        0
+      ).getDate();
 
       const { data, error } = await supabase
         .from("transactions")
         .select("*")
         .eq("user_id", user.id)
         .gte("date", `${currentYear}-01-01`)
-        .lte("date", `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(lastDayOfMonth).padStart(2, '0')}`);
+        .lte(
+          "date",
+          `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(lastDayOfMonth).padStart(2, "0")}`
+        );
 
       if (error) throw error;
 
@@ -279,9 +215,7 @@ export function PieAmount() {
           <div className="flex flex-wrap justify-between">
             <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
               <CardTitle>Monthly Amounts</CardTitle>
-              <CardDescription>
-                Amounts by month for {chartConfig[activeCategory].label}
-              </CardDescription>
+              <CardDescription>Amounts by month</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -300,16 +234,10 @@ export function PieAmount() {
         <div className="flex flex-wrap justify-between">
           <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
             <CardTitle>Monthly Amounts</CardTitle>
-            <CardDescription>
-              Amounts by month for {chartConfig[activeCategory].label}
-            </CardDescription>
+            <CardDescription>Amounts by month</CardDescription>
           </div>
           <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
             <div className="flex gap-2">
-              <CategorySelect
-                value={activeCategory}
-                onValueChange={setActiveCategory}
-              />
               <MonthSelect value={activeMonth} onValueChange={setActiveMonth} />
             </div>
           </div>
