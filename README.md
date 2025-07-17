@@ -18,11 +18,11 @@ MoneyMetrics is a financial data visualizer that helps users track expenses and 
 
 ## Screenshots
 
-![Charts Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/charts.png "Charts Page")
+![Charts Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/charts_ex.png "Charts Page")
 
-![Transactions Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/transactions.png "Transations Page")
+![Transactions Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/transactions_ex.png "Transations Page")
 
-![Import Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/import.png "Import Page")
+![Import Page](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/import_ex.png "Import Page")
 
 > Link to [sample PDF](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/SAMPLE.pdf)
 
