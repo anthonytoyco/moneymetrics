@@ -31,9 +31,3 @@ MoneyMetrics is a financial data visualizer that helps users track expenses and 
 - **Database**: [Supabase](https://supabase.com/)
 
 - **AI API**: [Google Gemini](https://ai.google.dev/) (Gemini 2.0 Flash-Lite)
-
-## PDFs
-
-- **Project Proposal**: [PDF](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/project_proposal.pdf)
-
-- **Design Proposal**: [PDF](https://github.com/anthonytoyco/moneymetrics/blob/main/misc/design_proposal.pdf)
